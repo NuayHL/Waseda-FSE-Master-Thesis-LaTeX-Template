@@ -1,0 +1,124 @@
+% =============================================================================
+% LaTeX Style Package for Master's Thesis at Waseda University, FSE
+%
+% Author:  Haoyuan Liu (Initial version: 2023-06-30)
+%
+% Description:
+%   This LaTeX style package provides the required formatting for a Master's 
+%   thesis submitted to the Graduate School of Fundamental Science and 
+%   Engineering (FSE) at Waseda University.
+%
+%   It is designed to work with the standard 'article' class, separating 
+%   document style from content for a clean and maintainable workflow.
+%
+% Usage:
+%   In your main .tex file, load it after the document class:
+%   \documentclass[12pt, a4paper]{article}
+%   \usepackage{wasedaThesis}
+% =============================================================================
+
+% page size
+\usepackage[a4paper, left=3.18cm, right=3.18cm, top=2.54cm, bottom=2.54cm]{geometry}
+
+% control line space
+\renewcommand{\baselinestretch}{1.5}
+
+% Times New Roman
+\usepackage{mathptmx}
+
+% indent for the first par in a section
+\usepackage{indentfirst}
+
+% the space between the section number and name
+\makeatletter
+\renewcommand*\@seccntformat[1]{\csname the#1\endcsname\hspace{0.3em}}
+\makeatother
+
+% caption formate for table and fig
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+\usepackage{caption}
+\captionsetup[figure]{
+  font={small},
+  labelfont={bf},
+  labelsep=period
+}
+\captionsetup[table]{
+  font={small},
+  labelfont={bf},
+  labelsep=period
+}
+
+% make cover
+\newenvironment{cover}[6]{
+\vspace*{65mm}
+\begin{center}
+    \Large\bf{#6}
+\end{center}
+\vspace{20mm}
+\begin{center}
+    A Thesis Submitted to \\the Department of Computer Science and Communications Engineering,\\ the Graduate School of Fundamental Science and Engineering of Waseda University \\in Partial Fulfillment of the Requirements for the Degree of Master of Engineering 
+\end{center}
+\vspace*{1em}
+\begin{center}
+    #1
+\end{center}
+\vspace*{\fill}
+\begin{center}
+    #2\\(#3)\\Advisor: #4\\Research guidance: #5
+\end{center}
+}{\thispagestyle{empty}\clearpage}
+
+% acknowledgements
+\newenvironment{acknowledgements}
+    {\pagenumbering{roman}\newpage\section*{Acknowledgements}
+        \addcontentsline{toc}{section}{Acknowledgements}}
+    {\clearpage}
+
+% abstract
+\def\abstract{\newpage\section*{Abstract}
+    \addcontentsline{toc}{section}{Abstract}}
+\def\endabstract{\clearpage}
+
+% keywords
+\def\keywords{\vspace{.5em}\\\noindent
+{\bf{Keywords:}}}
+\def\endkeywords{\par} 
+
+% -------content setting-------
+% set names for three content
+\renewcommand{\contentsname}{\bf\Large\centering List of Content}
+\renewcommand{\listfigurename}{\bf\Large\centering List of Figures}
+\renewcommand{\listtablename}{\bf\Large\centering List of Tables}
+
+\usepackage{tocloft}
+
+% center content
+\renewcommand{\cfttoctitlefont}{\hfil\Large\bfseries}
+\renewcommand{\cftloftitlefont}{\hfil\Large\bfseries}
+\renewcommand{\cftlottitlefont}{\hfil\Large\bfseries}
+
+% create blank after content
+\renewcommand{\cftaftertoctitle}{\vspace{0.5cm}}
+\renewcommand{\cftafterloftitle}{\vspace{0.5cm}}
+\renewcommand{\cftafterlottitle}{\vspace{0.5cm}}
+
+% set fig list format
+\setlength{\cftfigindent}{0pt}
+\renewcommand{\cftfigpresnum}{\bf Fig. }
+\setlength{\cftfignumwidth}{4em}
+
+% set table list format
+\setlength{\cfttabindent}{0pt}
+\renewcommand{\cfttabpresnum}{\bf Table }
+\setlength{\cfttabnumwidth}{4.5em}
+
+\setlength{\cftbeforesecskip}{0.2em}
+
+% create content
+\def\makecontent{
+\tableofcontents\addcontentsline{toc}{section}{List of Contents}\clearpage
+\listoffigures\addcontentsline{toc}{section}{List of Figures}\clearpage
+\listoftables\addcontentsline{toc}{section}{List of Tables}\clearpage
+\pagenumbering{arabic}}
+% ---end content setting-------

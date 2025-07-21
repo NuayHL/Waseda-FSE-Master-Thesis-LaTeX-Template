@@ -1,0 +1,162 @@
+% =============================================================================
+% Master's Thesis Template for Waseda University, FSE
+% To be used with:
+%          wasedaThesis.sty  - Master Thesis LaTeX style file, and
+%          IEEEbib.bst - IEEE bibliography style file.
+% Original template structure by Haoyuan Liu (2023-06-30).
+% To be compiled with a LaTeX distribution (e.g., TeX Live, MiKTeX) and BibTeX.
+% =============================================================================
+\documentclass[12pt]{article}
+\usepackage{wasedaThesis}
+\usepackage{amsmath,graphicx}
+\usepackage{booktabs} % generate booktabs
+\usepackage{color} % text color
+\usepackage{makecell} % center the cell
+\usepackage{amssymb} % draw checkmark
+\usepackage{multirow} % multirow
+\usepackage{svg} 
+\usepackage{enumitem} % item
+\usepackage[hidelinks]{hyperref} % hyper-link
+
+\begin{document}
+
+% make cover
+\begin{cover}
+{August 7th, 20XX} % submission date
+{Xiaomei WANG} % name
+{XXXXXXXX-X} % student ID
+{Prof. XXXXXX XXXXXX} % advisor
+{Research on XXXXXXXXXXX} % seminar name
+{The Title of Your Thesis} % title
+\end{cover}
+
+% pre section title formate
+\makeatletter
+\def\section{\@startsection{section}{1}{\z@}
+             {-3.5ex \@plus -1ex \@minus -.2ex}
+             {5ex \@plus.2ex}
+             {\clearpage\bf\Large\centering}}
+\makeatother
+
+% acknowledgements
+\begin{acknowledgements}
+Writing a master’s thesis can be a daunting and time-consuming task, but it’s important to remember to take a moment to acknowledge the people who helped you along the way. Acknowledgments in a master’s thesis serve as a way to thank those who have supported you during your studies and research.
+
+When writing your acknowledgement, it’s important to be sincere and heartfelt. Start by thanking your advisor, who likely played a key role in your research and writing process. You should also consider thanking any other members of your thesis committee, as well as any colleagues or mentors who provided guidance or support.
+
+If you conducted your research at an organization or with the help of any resources, be sure to express your gratitude to those who made it possible. You should also consider thanking any friends or family members who supported you during this process, as they likely played a crucial role in helping you stay motivated and on track.
+
+Finally, don’t forget to thank the participants in your study. Without their contribution, your research would not have been possible.
+
+Overall, the acknowledgement section of your master’s thesis is an important way to show appreciation for those who have helped you along the way. Be sure to take the time to express your gratitude in a sincere and heartfelt way.
+
+Source: 
+
+https://acknowledgementletter.com/master-thesis-acknowledgement-sample/
+\end{acknowledgements}
+
+% abstract
+\begin{abstract}
+The abstract is an important component of your thesis. Presented at the beginning of the thesis, it is likely the first substantive description of your work read by an external examiner. You should view it as an opportunity to set accurate expectations.
+
+The abstract is a summary of the whole thesis. It presents all the major elements of your work in a highly condensed form.
+
+An abstract often functions, together with the thesis title, as a stand-alone text. Abstracts appear, absent the full text of the thesis, in bibliographic indexes such as PsycInfo. They may also be presented in announcements of the thesis examination. Most readers who encounter your abstract in a bibliographic database or receive an email announcing your research presentation will never retrieve the full text or attend the presentation.
+
+An abstract is not merely an introduction in the sense of a preface, preamble, or advance organizer that prepares the reader for the thesis. In addition to that function, it must be capable of substituting for the whole thesis when there is insufficient time and space for the full text.\vspace{10pt}
+Source: https://www.sfu.ca/~jcnesbit/HowToWriteAbstract.htm
+% keywords
+\begin{keywords}
+Keyword 1, Keyword 2, Keyword 3, etc.
+\end{keywords}
+\end{abstract}
+
+% make three content
+\makecontent
+
+% main section title formate
+\makeatletter
+\def\customchapter{Chapter}
+\def\section{\@startsection{section}{1}{\z@}
+             {-3.5ex \@plus -1ex \@minus -.2ex}
+             {5ex \@plus.2ex}
+             {\clearpage\bf\Large\noindent\customchapter\space}}
+\makeatother
+
+% --------------
+% begin the main paper
+% --------------
+\section{Introduction}
+\label{chap:intro}
+
+This is the introduction to your thesis. You should introduce the research problem, your motivation, the scope of your work, and the structure of the thesis.
+
+\begin{figure}[htbp]
+    \centering % Use \centering inside floats, it's better than the center environment
+    \includegraphics[width=0.8\linewidth]{example-image-a} % Use example images for templates
+    \caption[Short caption for LoF]{This is the full figure caption that appears below the image.}
+    \label{fig:example}
+\end{figure}
+
+\subsection{A Subsection}
+Here is a subsection within the introduction.
+
+\section{Related Work}
+\label{chap:relwork}
+
+In this chapter, you review the existing literature relevant to your research. For example, you might discuss key papers in object detection.
+Some famous works include DETR \cite{detr}, YOLOX \cite{yolox}, YOLOv3 \cite{yolov3}, and the MS COCO dataset \cite{coco2017}.
+
+\section{Proposed Method}
+\label{chap:methods}
+
+In this chapter, we introduce the proposed method which is based on XXX and XXX. We named it as XXXX.
+
+For example, the loss function could be:
+$$ \mathcal{L}_{\text{total}} = \lambda_1 \mathcal{L}_{\text{cls}} + \lambda_2 \mathcal{L}_{\text{reg}} $$
+This formula will render correctly.
+
+\section{Experiments and Analysis}
+\label{chap:exps}
+
+This chapter presents the experimental setup, results, and analysis.
+
+\begin{table}[htbp]
+    \centering
+    \caption{An example table using `booktabs` style.}
+    \label{tab:fruit-quantity}
+    \begin{tabular}{@{}lcr@{}}
+        \toprule
+        No. & Name   & Quantity \\
+        \midrule
+        1   & Apple  & 10       \\
+        2   & Banana & 8        \\
+        3   & Orange & 15       \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\section{Conclusion}
+\label{chap:conclusion}
+
+This is your conclusion. Summarize your contributions and discuss potential future work.
+
+
+% --------------
+% end the main paper
+% --------------
+
+\vfill\pagebreak
+
+\makeatletter
+\def\section{\@startsection{section}{1}{\z@}
+             {-3.5ex \@plus -1ex \@minus -.2ex}
+             {5ex \@plus.2ex}
+             {\bf\Large\noindent}}
+\makeatother
+
+\bibliographystyle{IEEEbib}
+\bibliography{myref}
+
+\end{document}
