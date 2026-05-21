@@ -1,124 +1,233 @@
 % =============================================================================
+% wasedaThesisMaster.sty
 % LaTeX Style Package for Master's Thesis at Waseda University, FSE
 %
-% Author:  Haoyuan Liu (Initial version: 2023-06-30)
+% Author:  Haoyuan Liu (Initial: 2023-06-30, Revised: 2026-05)
 %
 % Description:
-%   This LaTeX style package provides the required formatting for a Master's 
-%   thesis submitted to the Graduate School of Fundamental Science and 
-%   Engineering (FSE) at Waseda University.
+%   Formatting package for a Master's thesis submitted to the Graduate School
+%   of Fundamental Science and Engineering (FSE) at Waseda University.
 %
-%   It is designed to work with the standard 'article' class, separating 
-%   document style from content for a clean and maintainable workflow.
+%   Designed for the 'report' document class, which provides full
+%   \chapter / \section / \subsection hierarchy suitable for theses.
+%   Visual layout is kept consistent with the original article-based version.
 %
 % Usage:
-%   In your main .tex file, load it after the document class:
-%   \documentclass[12pt, a4paper]{article}
-%   \usepackage{wasedaThesis}
+%   \documentclass[12pt, a4paper]{report}
+%   \usepackage{wasedaThesisMaster}
+%
+% Cover page usage:
+%   \makecover{Title}{Author}{Student ID}{Advisor}{Research Guidance}{Date}
 % =============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{wasedaThesisMaster}[2026/05/21 Waseda FSE Master Thesis Style]
 
-% page size
-\usepackage[a4paper, left=3.18cm, right=3.18cm, top=2.54cm, bottom=2.54cm]{geometry}
+% ======================= Page Layout ========================================
+\RequirePackage[
+  a4paper,
+  left=3.18cm,
+  right=3.18cm,
+  top=2.54cm,
+  bottom=2.54cm
+]{geometry}
 
-% control line space
-\renewcommand{\baselinestretch}{1.5}
+% ======================= Fonts ==============================================
+% newtxtext + newtxmath: modern replacement for the obsolete mathptmx
+\RequirePackage{amssymb}
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
 
-% Times New Roman
-\usepackage{mathptmx}
+% ======================= Line Spacing =======================================
+\RequirePackage{setspace}
+\setstretch{1.5}  % equivalent to \renewcommand{\baselinestretch}{1.5}
 
-% indent for the first par in a section
-\usepackage{indentfirst}
+% ======================= Paragraph Formatting ===============================
+\RequirePackage{indentfirst}
 
-% the space between the section number and name
-\makeatletter
-\renewcommand*\@seccntformat[1]{\csname the#1\endcsname\hspace{0.3em}}
-\makeatother
+% ======================= Chapter / Section Formatting =======================
+\RequirePackage{titlesec}
 
-% caption formate for table and fig
+% -- Chapter title style (label and title on the same line) --
+\newif\if@centerchaptitle
+\@centerchaptitlefalse
+
+\titleformat{\chapter}[hang]
+  {\normalfont\LARGE\bfseries\if@centerchaptitle\centering\fi}  % format applied to both label and title
+  {Chapter\ \thechapter\enspace}% label  (\enspace = thin space before title)
+  {0pt}                         % sep (0pt because \enspace is already in label)
+  {}                            % before-code
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}  % reduce top whitespace
+
+% -- Section spacing tweaks (preserve the 0.3em gap from the original) --
+\titleformat{\section}
+  {\normalfont\large\bfseries}
+  {\thesection}{0.3em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{0.3em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\itshape}
+  {\thesubsubsection}{0.3em}{}
+
+% ======================= Caption Formatting =================================
+\RequirePackage{caption}
 \renewcommand{\figurename}{Fig.}
 \renewcommand{\tablename}{Table}
-\usepackage{caption}
 \captionsetup[figure]{
-  font={small},
-  labelfont={bf},
-  labelsep=period
+  font      = small,
+  labelfont = bf,
+  labelsep  = period,
 }
 \captionsetup[table]{
-  font={small},
-  labelfont={bf},
-  labelsep=period
+  font      = small,
+  labelfont = bf,
+  labelsep  = period,
 }
 
-% make cover
-\newenvironment{cover}[6]{
-\vspace*{65mm}
-\begin{center}
-    \Large\bf{#6}
-\end{center}
-\vspace{20mm}
-\begin{center}
-    A Thesis Submitted to \\the Department of Computer Science and Communications Engineering,\\ the Graduate School of Fundamental Science and Engineering of Waseda University \\in Partial Fulfillment of the Requirements for the Degree of Master of Engineering 
-\end{center}
-\vspace*{1em}
-\begin{center}
-    #1
-\end{center}
-\vspace*{\fill}
-\begin{center}
-    #2\\(#3)\\Advisor: #4\\Research guidance: #5
-\end{center}
-}{\thispagestyle{empty}\clearpage}
+% ======================= Header / Footer ====================================
+\RequirePackage{fancyhdr}
 
-% acknowledgements
-\newenvironment{acknowledgements}
-    {\pagenumbering{roman}\newpage\section*{Acknowledgements}
-        \addcontentsline{toc}{section}{Acknowledgements}}
-    {\clearpage}
+% default page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}  % chapter title in header
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
 
-% abstract
-\def\abstract{\newpage\section*{Abstract}
-    \addcontentsline{toc}{section}{Abstract}}
-\def\endabstract{\clearpage}
+% plain style (used on chapter-opening pages)
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
 
-% keywords
-\def\keywords{\vspace{.5em}\\\noindent
-{\bf{Keywords:}}}
-\def\endkeywords{\par} 
+% ======================= Table of Contents ==================================
+\RequirePackage{tocloft}
 
-% -------content setting-------
-% set names for three content
-\renewcommand{\contentsname}{\bf\Large\centering List of Content}
-\renewcommand{\listfigurename}{\bf\Large\centering List of Figures}
-\renewcommand{\listtablename}{\bf\Large\centering List of Tables}
+% -- Title names (keep "List of Content" as in original master's version) --
+\renewcommand{\contentsname}{List of Content}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
 
-\usepackage{tocloft}
-
-% center content
 \renewcommand{\cfttoctitlefont}{\hfil\Large\bfseries}
 \renewcommand{\cftloftitlefont}{\hfil\Large\bfseries}
 \renewcommand{\cftlottitlefont}{\hfil\Large\bfseries}
-
-% create blank after content
 \renewcommand{\cftaftertoctitle}{\vspace{0.5cm}}
 \renewcommand{\cftafterloftitle}{\vspace{0.5cm}}
 \renewcommand{\cftafterlottitle}{\vspace{0.5cm}}
 
-% set fig list format
+% -- Figure list: "Fig. X  title ............. page" --
 \setlength{\cftfigindent}{0pt}
-\renewcommand{\cftfigpresnum}{\bf Fig. }
+\renewcommand{\cftfigpresnum}{\bfseries Fig.\ }
 \setlength{\cftfignumwidth}{4em}
 
-% set table list format
+% -- Table list: "Table X  title ............. page" --
 \setlength{\cfttabindent}{0pt}
-\renewcommand{\cfttabpresnum}{\bf Table }
+\renewcommand{\cfttabpresnum}{\bfseries Table\ }
 \setlength{\cfttabnumwidth}{4.5em}
 
-\setlength{\cftbeforesecskip}{0.2em}
+% -- Spacing: tighten TOC / LoF / LoT entry gaps --
+\setlength{\cftbeforechapskip}{0.15em}  % space before each chapter entry in TOC
+\setlength{\cftbeforesecskip}{0.05em}   % space before each section entry in TOC
+\setlength{\cftbeforefigskip}{0.05em}   % space between entries in LoF
+\setlength{\cftbeforetabskip}{0.05em}   % space between entries in LoT
 
-% create content
-\def\makecontent{
-\tableofcontents\addcontentsline{toc}{section}{List of Contents}\clearpage
-\listoffigures\addcontentsline{toc}{section}{List of Figures}\clearpage
-\listoftables\addcontentsline{toc}{section}{List of Tables}\clearpage
-\pagenumbering{arabic}}
-% ---end content setting-------
+% -- Generate all lists and switch to arabic numbering --
+\newcommand{\makecontent}{%
+  \tableofcontents%
+  \addcontentsline{toc}{chapter}{List of Content}%
+  \clearpage
+  \listoffigures%
+  \addcontentsline{toc}{chapter}{List of Figures}%
+  \clearpage
+  \listoftables%
+  \addcontentsline{toc}{chapter}{List of Tables}%
+  \clearpage
+}
+
+% ======================= Cover Page =========================================
+% Usage:
+%   \makecover{Title}{Author}{Student ID}{Advisor}{Research Guidance}{Date}
+%
+\newcommand{\makecover}[6]{%
+  \begin{titlepage}
+    \centering
+    \vspace*{65mm}
+    {\Large\bfseries #1\par}%                             % title
+    \vspace{20mm}
+    {\normalsize
+      A Thesis Submitted to \\
+      the Department of Computer Science and Communications Engineering,\\
+      the Graduate School of Fundamental Science and Engineering of Waseda University \\
+      in Partial Fulfillment of the Requirements for the Degree of Master of Engineering%
+    \par}
+    \vspace{1em}
+    {\normalsize #6\par}%                                  % date
+    \vfill
+    {\normalsize
+      #2\\%                                                % author
+      (#3)\\%                                              % student ID
+      Advisor: #4\\%                                       % advisor
+      Research guidance: #5%                               % research guidance
+    \par}
+  \end{titlepage}
+}
+
+% ======================= Front Matter Environments ==========================
+% Switch to roman page numbering for front matter.
+% Call \mainmatter before Chapter 1.
+
+\newcommand{\frontmatter}{%
+  \cleardoublepage
+  \pagenumbering{roman}%
+}
+\newcommand{\mainmatter}{%
+  \cleardoublepage
+  \pagenumbering{arabic}%
+}
+\newcommand{\backmatter}{%
+  \cleardoublepage
+}
+
+% -- Acknowledgements --
+\newenvironment{acknowledgements}{%
+  \@centerchaptitletrue
+  \chapter*{Acknowledgements}%
+  \@centerchaptitlefalse
+  \addcontentsline{toc}{chapter}{Acknowledgements}%
+}{%
+  \clearpage
+}
+
+% -- Abstract (report class already defines this, so we override) --
+\renewenvironment{abstract}{%
+  \@centerchaptitletrue
+  \chapter*{Abstract}%
+  \@centerchaptitlefalse
+  \addcontentsline{toc}{chapter}{Abstract}%
+}{%
+  \clearpage
+}
+
+% -- Keywords (use inside abstract environment) --
+\newcommand{\keywords}[1]{%
+  \par\vspace{0.5em}%
+  \noindent\textbf{Keywords:}\ #1%
+}
+
+% ======================= Bibliography =======================================
+% Add bibliography to TOC automatically
+\RequirePackage[nottoc]{tocbibind}
+
+% ======================= Hyperlinks (load last) =============================
+\RequirePackage[
+  colorlinks        = true,
+  linkcolor         = black,
+  citecolor         = black,
+  urlcolor          = blue,
+  bookmarks         = true,
+  bookmarksnumbered = true,
+]{hyperref}
+
+\endinput

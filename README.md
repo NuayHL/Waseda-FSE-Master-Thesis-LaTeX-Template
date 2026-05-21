@@ -4,7 +4,7 @@ A clean and maintainable LaTeX template for Master's theses submitted to the Gra
 
 **Author:** Haoyuan Liu
 
-**Version:** 2023-06-30
+**Version:** 2026-05-21
 
 ## File Structure
 ```
